@@ -33,4 +33,5 @@ main
 .DS_Store
 
 course_reg.html
-
+correct_password.html
+wrong_password.html
