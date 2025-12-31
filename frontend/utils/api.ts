@@ -1,4 +1,4 @@
-import { RegistrationData } from './api.types';
+import type { RegistrationData } from './api.types';
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 

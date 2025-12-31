@@ -26,9 +26,9 @@ export default function Result() {
   if (!data) return null;
 
   const isApproved = data.approvalStatus.toLowerCase().includes("approved");
-  const isRegistered =
-    data.registrationStatus.toLowerCase().includes("open") ||
-    data.courses.length > 0;
+  // const isRegistered =
+  //   data.registrationStatus.toLowerCase().includes("open") ||
+  //   data.courses.length > 0;
 
   return (
     <div className="min-h-screen bg-slate-50 p-6 md:p-12">
@@ -86,7 +86,7 @@ export default function Result() {
                   </p>
                 </div>
                 {isApproved ? (
-                  <CheckCircle className="h-10 w-10 text-green-100 text-green-500" />
+                  <CheckCircle className="h-10 w-10 text-green-500" />
                 ) : (
                   <FileWarning className="h-10 w-10 text-yellow-500" />
                 )}
