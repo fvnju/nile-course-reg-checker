@@ -1,0 +1,62 @@
+package server
+
+import (
+	"net/http"
+	"nile-cgpa/internal/logic"
+
+	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/gin"
+)
+
+func (s *Server) RegisterRoutes() http.Handler {
+	r := gin.Default()
+
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"*"}, // Add your frontend URL
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"},
+		AllowHeaders:     []string{"Accept", "Authorization", "Content-Type"},
+		AllowCredentials: true, // Enable cookies/auth
+	}))
+
+	r.POST("/course-registration", s.ScrapeForCourseApproval)
+
+	return r
+}
+
+func (s *Server) ScrapeForCourseApproval(c *gin.Context) {
+	var requestBody struct {
+		StudentID string `json:"studentId" binding:"required"`
+		Password  string `json:"password" binding:"required"`
+	}
+
+	if err := c.ShouldBindJSON(&requestBody); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// Get session token
+	session, err := logic.GetSessionToken()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get session: " + err.Error()})
+		return
+	}
+
+	// Login to Nile SIS
+	err = logic.LoginToNileSIS(requestBody.StudentID, requestBody.Password, session)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Login failed: " + err.Error()})
+		return
+	}
+
+	// Scrape course registration data
+	registrationData, err := logic.ScrapeCourseRegistration(requestBody.StudentID, session)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to scrape registration: " + err.Error()})
+		return
+	}
+
+	// Logout
+	logic.Logout(requestBody.StudentID, session)
+
+	c.JSON(http.StatusOK, registrationData)
+}

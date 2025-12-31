@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+:root {
+  /* Colors extracted/inspired by the ChronoTask image */
+  --color-primary: #2563eb; /* Vivid Blue */
+  --color-primary-dark: #1d4ed8;
+  --color-background: #f8fafc; /* Light gray/white background */
+  --color-surface: #ffffff; /* Pure white cards */
+  --color-text-main: #1e293b; /* Dark slate */
+  --color-text-muted: #64748b; /* Muted slate */
+
+  --color-success: #10b981;
+  --color-error: #ef4444;
+  --color-warning: #f59e0b;
+
+  --shadow-soft: 0 4px 6px -1px rgb(0 0 0 / 0.05),
+    0 2px 4px -2px rgb(0 0 0 / 0.05);
+  --shadow-card: 0 10px 15px -3px rgb(0 0 0 / 0.05),
+    0 4px 6px -4px rgb(0 0 0 / 0.05);
+  --shadow-glow: 0 0 20px -5px rgba(37, 99, 235, 0.3);
+
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-text-main);
+}
+
+@theme {
+  --color-primary: var(--color-primary);
+  --color-primary-dark: var(--color-primary-dark);
+  --color-surface: var(--color-surface);
+  --color-text-main: var(--color-text-main);
+  --color-text-muted: var(--color-text-muted);
+  --color-success: var(--color-success);
+  --color-error: var(--color-error);
+  --color-warning: var(--color-warning);
+
+  --shadow-soft: var(--shadow-soft);
+  --shadow-card: var(--shadow-card);
+  --shadow-glow: var(--shadow-glow);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar for webkit */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
