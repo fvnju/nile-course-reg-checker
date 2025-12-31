@@ -28,8 +28,8 @@ export async function checkCourseRegistration(studentId: string, password: strin
         let errorMessage = 'Failed to check registration';
         try {
             const errorBody = await response.json();
-            if (errorBody && errorBody.message) {
-                errorMessage = errorBody.message;
+            if (errorBody && errorBody.error) {
+                errorMessage = errorBody.error;
             }
         } catch (e) {
             // Ignore JSON parse error, use default message
